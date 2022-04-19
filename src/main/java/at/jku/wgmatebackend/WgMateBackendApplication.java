@@ -9,5 +9,5 @@ public class WgMateBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WgMateBackendApplication.class, args);
 	}
-
+	
 }
