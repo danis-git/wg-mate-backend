@@ -1,20 +1,20 @@
 package at.jku.wgmatebackend.model.entity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.YearMonth;
 
 @Entity
-public class User {
+public class Expense {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
     private String name;
-
-    private String email;
-
-    private String password;
+    private float costs; // [€]
+    private YearMonth startDate;
 
     public Integer getId() {
         return id;
@@ -32,19 +32,19 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public float getCosts() {
+        return costs;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCosts(float costs) {
+        this.costs = costs;
     }
 
-    public String getPassword() {
-        return password;
+    public YearMonth getStartDate() {
+        return startDate;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setStartDate(YearMonth startDate) {
+        this.startDate = startDate;
     }
 }
