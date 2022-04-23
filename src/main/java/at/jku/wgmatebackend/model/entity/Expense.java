@@ -1,27 +1,46 @@
 package at.jku.wgmatebackend.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.YearMonth;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Expense {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Integer expenseId;
 
     private String name;
     private float costs; // [€]
     private YearMonth startDate;
 
-    public Integer getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "Flat_ID")
+    private Flat flat;
+
+    @ManyToOne
+    @JoinColumn(name = "Main_Payer")
+    private User mainPayer;
+
+    @ManyToMany
+    @JoinTable(name="Share_Expense",
+            joinColumns=@JoinColumn(name="EXPENSE_ID"),
+            inverseJoinColumns=@JoinColumn(name="USER_ID"))
+    private Set<User> sharePayer = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "EXPENSE_TEMPLATE_ID")
+    private ExpenseTemplate expenseTemplate;
+
+
+
+    public Integer getExpenseId() {
+        return expenseId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setExpenseId(Integer id) {
+        this.expenseId = id;
     }
 
     public String getName() {

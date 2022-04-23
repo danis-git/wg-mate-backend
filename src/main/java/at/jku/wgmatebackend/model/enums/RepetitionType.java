@@ -1,4 +1,4 @@
-package at.jku.wgmatebackend.model.entity;
+package at.jku.wgmatebackend.model.enums;
 
 public enum RepetitionType {
     DAILY, WEEKLY, YEARLY

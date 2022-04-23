@@ -1,29 +1,48 @@
 package at.jku.wgmatebackend.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import at.jku.wgmatebackend.model.enums.RepetitionType;
+
+import javax.persistence.*;
 import java.time.YearMonth;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ExpenseTemplate {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Integer expenseTemplateId;
 
     private String name;
     private float costs; // [€]
     private RepetitionType repetitionType;
     private YearMonth startDate;
 
-    public Integer getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "Flat_ID")
+    private Flat flat;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User mainPayer;
+
+    @ManyToMany
+    @JoinTable(name="Share_Expense_Template",
+            joinColumns=@JoinColumn(name="EXPENSE_TEMPLATE_ID"),
+            inverseJoinColumns=@JoinColumn(name="USER_ID"))
+    private Set<User> sharePayer = new HashSet<>();
+
+    @OneToMany(mappedBy = "expenseTemplate")
+    private List<Expense> expenses;
+
+    public Integer getExpenseTemplateId() {
+        return expenseTemplateId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setExpenseTemplateId(Integer id) {
+        this.expenseTemplateId = id;
     }
 
     public String getName() {

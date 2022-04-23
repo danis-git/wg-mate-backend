@@ -1,27 +1,53 @@
 package at.jku.wgmatebackend.model.entity;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
-
+    private Integer userId;
     private String name;
-
     private String email;
-
     private String password;
 
-    public Integer getId() {
-        return id;
+    // ------- Flats -----------
+    @OneToMany(mappedBy = "owner")
+    private List<Flat> ownerFlats;
+
+    @ManyToMany(mappedBy = "coOwner")
+    private Set<Flat> coFlats = new HashSet<>();
+
+    // ------- Task -----------
+    @ManyToMany(mappedBy = "assignedUser")
+    private Set<Task> assignedTasks = new HashSet<>();
+
+    // ------- TaskTemplate -----------
+    @ManyToMany(mappedBy = "assignedUser")
+    private Set<TaskTemplate> assignedTaskTemplates = new HashSet<>();
+
+    // ------- Expense -----------
+    @OneToMany(mappedBy = "mainPayer") // TODO
+    private List<Expense> mainExpenses;
+
+    @ManyToMany(mappedBy = "sharePayer") // TODO
+    private Set<Expense> shareExpenses = new HashSet<>();
+
+    // ------- ExpenseTemplate -----------
+    @OneToMany(mappedBy = "mainPayer") // TODO
+    private List<ExpenseTemplate> mainExpenseTemplates;
+
+    @ManyToMany(mappedBy = "sharePayer") // TODO
+    private Set<ExpenseTemplate> shareExpenseTemplates = new HashSet<>();
+
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer id) {
+        this.userId = id;
     }
 
     public String getName() {

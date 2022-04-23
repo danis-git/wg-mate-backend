@@ -1,27 +1,41 @@
 package at.jku.wgmatebackend.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.YearMonth;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Task {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Integer taskId;
 
     private String name;
     private YearMonth startDate;
 
-    public Integer getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "FLAT_ID")
+    private Flat flat;
+
+    @ManyToOne
+    @JoinColumn(name = "TASK_TEMPLATE_ID")
+    private TaskTemplate taskTemplate;
+
+
+    @ManyToMany
+    @JoinTable(name="assigned_User_Task",
+            joinColumns=@JoinColumn(name="TASK_ID"),
+            inverseJoinColumns=@JoinColumn(name="USER_ID"))
+    private Set<User> assignedUser = new HashSet<>();
+
+    public Integer getTaskId() {
+        return taskId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTaskId(Integer id) {
+        this.taskId = id;
     }
 
     public String getName() {

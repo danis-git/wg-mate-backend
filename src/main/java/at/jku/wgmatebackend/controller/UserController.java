@@ -25,10 +25,10 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @GetMapping("/user")
-    public User getUserById( @RequestBody Integer userId) {
-        return userRepository.findById(userId).orElseThrow();
-    }
+//    @GetMapping("/user")
+//    public User getUserById( @RequestBody Integer userId) {
+//        return userRepository.findById(userId).orElseThrow();
+//    }
 
     @PutMapping("/user/{id}")
     public User updateUser(@PathVariable(value = "id") Integer userId, @RequestBody User userDetails) {

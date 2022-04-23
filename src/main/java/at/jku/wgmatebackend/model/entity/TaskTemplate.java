@@ -1,28 +1,44 @@
 package at.jku.wgmatebackend.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.YearMonth;
+import at.jku.wgmatebackend.model.enums.RepetitionType;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class TaskTemplate {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Integer taskTemplateId;
 
     private String name;
     private RepetitionType repetitionType;
-    private YearMonth startDate;
+    private Date startDate; //TODO Date? or other
 
-    public Integer getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "Flat_ID")
+    private Flat flat;
+
+    @OneToMany(mappedBy = "taskTemplate")
+    private List<Task> tasks;
+
+    @ManyToMany
+    @JoinTable(name="Assigned_User_TaskTemplates",
+            joinColumns=@JoinColumn(name="TASK_TEMPLATE_ID"),
+            inverseJoinColumns=@JoinColumn(name="USER_ID"))
+    private Set<User> assignedUser = new HashSet<>();
+
+
+    public Integer getTaskTemplateId() {
+        return taskTemplateId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTaskTemplateId(Integer id) {
+        this.taskTemplateId = id;
     }
 
     public String getName() {
@@ -41,11 +57,11 @@ public class TaskTemplate {
         this.repetitionType = repetitionType;
     }
 
-    public YearMonth getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(YearMonth startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 }
