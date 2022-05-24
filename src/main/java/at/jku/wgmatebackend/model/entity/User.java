@@ -13,29 +13,24 @@ public class User {
     private String email;
     private String password;
 
-    // ------- Flats -----------
     @OneToMany(mappedBy = "owner")
     private List<Flat> ownerFlats;
 
     @ManyToMany(mappedBy = "coOwner")
     private Set<Flat> coFlats = new HashSet<>();
 
-    // ------- Task -----------
     @ManyToMany(mappedBy = "assignedUser")
     private Set<Task> assignedTasks = new HashSet<>();
 
-    // ------- TaskTemplate -----------
     @ManyToMany(mappedBy = "assignedUser")
     private Set<TaskTemplate> assignedTaskTemplates = new HashSet<>();
 
-    // ------- Expense -----------
-    @OneToMany(mappedBy = "mainPayer") // TODO
+    @OneToMany(mappedBy = "mainPayer")
     private List<Expense> mainExpenses;
 
     @ManyToMany(mappedBy = "sharePayer") // TODO
     private Set<Expense> shareExpenses = new HashSet<>();
 
-    // ------- ExpenseTemplate -----------
     @OneToMany(mappedBy = "mainPayer") // TODO
     private List<ExpenseTemplate> mainExpenseTemplates;
 
