@@ -9,28 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/userTest")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/user")
+    @GetMapping()
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
-    @PostMapping("/user")
+    @PostMapping()
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
 
-//    @GetMapping("/user")
-//    public User getUserById( @RequestBody Integer userId) {
-//        return userRepository.findById(userId).orElseThrow();
-//    }
-
-    @PutMapping("/user/{id}")
+    @PutMapping("/{id}")
     public User updateUser(@PathVariable(value = "id") Integer userId, @RequestBody User userDetails) {
 
         User user = userRepository.findById(userId).orElseThrow();
@@ -42,8 +37,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-
-    @DeleteMapping("/user")
+    @DeleteMapping()
     public ResponseEntity<?> deleteUser(@RequestBody Integer userId) {
         User user = userRepository.findById(userId).orElseThrow();
 
@@ -51,6 +45,4 @@ public class UserController {
 
         return ResponseEntity.ok().build();
     }
-
-
 }
