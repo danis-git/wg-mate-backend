@@ -13,6 +13,7 @@ class Login {
     public String password;
 }
 
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -23,6 +24,8 @@ public class AuthenticationController {
     @PostMapping("/login")
     public User login(@RequestBody Login login) {
         // todo: if password correct
-        return userRepository.findByEmail(login.email);
+        User test = userRepository.findByEmail(login.email);
+        System.out.println("Test User is: " + test.getEmail());
+        return test;
     }
 }

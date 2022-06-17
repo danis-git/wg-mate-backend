@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select u from User u where u.email = :email")
-    User findByEmail(@Param("email") String email);
+    User findByEmail(@Param("email") String email); // TODO: send without password
 }
