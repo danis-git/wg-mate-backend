@@ -1,6 +1,7 @@
 package at.jku.wgmatebackend.model.entity;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,4 +61,21 @@ public class Flat {
     public void setArea(Integer area) {
         this.area = area;
     }
+
+    public HashMap<Integer,String> getCoOwner(){
+        HashMap<Integer,String> co = new HashMap<>();
+        int i = 0;
+        for (User u:coOwner) {
+            co.put(i,u.getName());
+            i++;
+        }
+        return co;
+    }
+    public String getOwner(){
+        return this.owner.getName();
+    }
+    public Integer getResidentCount(){
+        return coOwner.size()+1;
+    }
+
 }
