@@ -77,5 +77,4 @@ public class Flat {
     public Integer getResidentCount(){
         return coOwner.size()+1;
     }
-
 }
