@@ -1,34 +1,47 @@
 package at.jku.wgmatebackend.model.entity;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
-import java.time.YearMonth;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Task {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer taskId;
 
     private String name;
-    private YearMonth startDate;
+
+    private Date startDate; // todo: could make problems
 
     @ManyToOne
     @JoinColumn(name = "FLAT_ID")
     private Flat flat;
 
+    @Nullable
     @ManyToOne
     @JoinColumn(name = "TASK_TEMPLATE_ID")
     private TaskTemplate taskTemplate;
 
-
     @ManyToMany
-    @JoinTable(name="assigned_User_Task",
-            joinColumns=@JoinColumn(name="TASK_ID"),
-            inverseJoinColumns=@JoinColumn(name="USER_ID"))
+    @JoinTable(name = "assigned_User_Task",
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID"))
     private Set<User> assignedUser = new HashSet<>();
+
+    public Task(String name, Date startDate, Flat flat, Set<User> assignedUser) {
+        this.name = name;
+        this.startDate = startDate;
+        this.flat = flat;
+        this.assignedUser = assignedUser;
+    }
+
+    public Task() {
+
+    }
 
     public Integer getTaskId() {
         return taskId;
@@ -46,11 +59,11 @@ public class Task {
         this.name = name;
     }
 
-    public YearMonth getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(YearMonth startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 }

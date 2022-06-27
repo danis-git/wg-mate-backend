@@ -22,10 +22,7 @@ public class UserController {
 
     @GetMapping("/{email}")
     public User getUserBy(@PathVariable(value = "email") String email) {
-        User lol = userRepository.findByEmail(email);
-        System.out.println("Yes we found the User: " + lol.toString());
-        System.out.println("Yes we found the User: -----------------------------------------------------------------------------------");
-        return lol;
+        return userRepository.findByEmail(email);
     }
 
     @PostMapping()
