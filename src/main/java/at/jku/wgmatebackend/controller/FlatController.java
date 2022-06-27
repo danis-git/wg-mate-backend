@@ -32,17 +32,15 @@ public class FlatController {
     }
 
     @GetMapping("/{id}")
-    public HashMap<Object, Object> getFlatById(@PathVariable(value = "id") int id) {
-        Flat f = flatRepository.getNames(id);
-        HashMap<Object, Object> m = new HashMap<>();
-        m.put("flatName", f.getName());
-        m.put("flatID", String.valueOf(f.getFlatId()));
-        m.put("area", String.valueOf(f.getArea()));
-        m.put("owner", f.getOwner());
-        m.put("coOwner", f.getCoOwner());
+    public HashMap<String, Flat> getFlatById(@PathVariable(value = "id") int id) {
+        List<Flat> f = flatRepository.getNames(id);
+        HashMap<String, Flat> m = new HashMap<>();
+        for (Flat flat : f) {
+            m.put(String.valueOf(flat.getFlatId()), flat);
+        }
         return m;
     }
-    
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFlat(@PathVariable(value = "id") int id) {

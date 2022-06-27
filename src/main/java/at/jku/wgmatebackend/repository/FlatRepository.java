@@ -13,5 +13,5 @@ import java.util.List;
 public interface FlatRepository extends JpaRepository<Flat, Integer> {
 
     @Query("select f from Flat f, User u where u.userId=:userid and f.owner.userId=:userid")
-    Flat getNames(@Param("userid") int userid);
+    List<Flat> getNames(@Param("userid") int userid);
 }
