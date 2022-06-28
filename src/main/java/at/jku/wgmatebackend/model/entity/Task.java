@@ -3,6 +3,9 @@ package at.jku.wgmatebackend.model.entity;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,7 +66,14 @@ public class Task {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDate(String startDate) {
+        TemporalAccessor ta = DateTimeFormatter.ISO_INSTANT.parse(startDate);
+        Instant i = Instant.from(ta);
+
+        this.startDate = Date.from(i);
+    }
+
+    public void setFlat(Flat flat) {
+        this.flat = flat;
     }
 }

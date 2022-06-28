@@ -1,6 +1,5 @@
 package at.jku.wgmatebackend.controller;
 
-import at.jku.wgmatebackend.model.DTO.TaskDTO;
 import at.jku.wgmatebackend.model.entity.Flat;
 import at.jku.wgmatebackend.model.entity.Task;
 import at.jku.wgmatebackend.model.entity.TaskTemplate;
@@ -31,12 +30,14 @@ public class TaskTemplateController {
         // todo: new Tasks
     }
 
-    @RequestMapping("/new")
+    @RequestMapping("/new/{flatId}")
     @PostMapping()
-    public void createTask(@RequestBody TaskDTO taskDTO) {
+    public void createTask(@PathVariable(value = "flatId") int flatId, @RequestBody Task task) {
         System.out.println("Grüßli----------------------------------------");
-        Task task = taskDTO.toTask();
-
+        //Task task = taskDTO.toTask();
+        Flat flat = flatRepository.getById(flatId);
+        task.setFlat(flat);
+        System.out.println("Herst numoi du Hupert");
         System.out.println(task.toString());
 
         taskRepository.save(task);
