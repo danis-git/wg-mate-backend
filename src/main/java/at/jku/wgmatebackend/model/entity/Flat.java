@@ -1,13 +1,15 @@
 package at.jku.wgmatebackend.model.entity;
 
 import javax.persistence.*;
-import java.sql.Array;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Flat {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer flatId;
 
     private String name;
@@ -18,9 +20,9 @@ public class Flat {
     private User owner;
 
     @ManyToMany
-    @JoinTable(name="CoOwnerFlats",
-            joinColumns=@JoinColumn(name="FLAT_ID"),
-            inverseJoinColumns=@JoinColumn(name="CO_USER_ID"))
+    @JoinTable(name = "CoOwnerFlats",
+            joinColumns = @JoinColumn(name = "FLAT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CO_USER_ID"))
     private Set<User> coOwner = new HashSet<>();
 
     @OneToMany(mappedBy = "flat")
@@ -35,13 +37,12 @@ public class Flat {
     @OneToMany(mappedBy = "flat")
     private List<TaskTemplate> taskTemplates;
 
+    public Integer getFlatId() {
+        return flatId;
+    }
 
     public void setFlatId(Integer id) {
         this.flatId = id;
-    }
-
-    public Integer getFlatId() {
-        return flatId;
     }
 
     public String getName() {
@@ -60,28 +61,35 @@ public class Flat {
         this.area = area;
     }
 
-    public HashMap<Integer,String> getCoOwner(){
-        HashMap<Integer,String> co = new HashMap<>();
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public HashMap<Integer, String> getCoOwner() {
+        HashMap<Integer, String> co = new HashMap<>();
         int i = 0;
-        for (User u:coOwner) {
-            co.put(i,u.getName());
+        for (User u : coOwner) {
+            co.put(i, u.getName());
             i++;
         }
         return co;
     }
-    public HashMap<Integer,Integer> getCoOwnerID(){
-        HashMap<Integer,Integer> co = new HashMap<>();
+
+    public HashMap<Integer, Integer> getCoOwnerID() {
+        HashMap<Integer, Integer> co = new HashMap<>();
         int i = 0;
-        for (User u:coOwner) {
-            co.put(i,u.getUserId());
+        for (User u : coOwner) {
+            co.put(i, u.getUserId());
             i++;
         }
         return co;
     }
-    public String getOwner(){
+
+    public String getOwner() {
         return this.owner.getName();
     }
-    public Integer getResidentCount(){
-        return coOwner.size()+1;
+
+    public Integer getResidentCount() {
+        return coOwner.size() + 1;
     }
 }

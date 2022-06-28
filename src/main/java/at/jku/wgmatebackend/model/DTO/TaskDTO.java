@@ -23,18 +23,14 @@ public class TaskDTO {
 
 
     public Task toTask() {
-        Date date;
-
         System.out.println(startDate);
-
 
         TemporalAccessor ta = DateTimeFormatter.ISO_INSTANT.parse(startDate);
         Instant i = Instant.from(ta);
-        date = Date.from(i);
+        Date date = Date.from(i);
 
         System.out.println(date);
-
-
+        
         return new Task(
                 name,
                 date,
