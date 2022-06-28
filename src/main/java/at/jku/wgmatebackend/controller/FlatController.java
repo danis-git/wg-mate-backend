@@ -34,9 +34,16 @@ public class FlatController {
     @GetMapping("/{id}")
     public HashMap<String, Flat> getFlatById(@PathVariable(value = "id") int id) {
         List<Flat> f = flatRepository.getNames(id);
+        List<Flat> coFlats = flatRepository.findAll();
         HashMap<String, Flat> m = new HashMap<>();
         for (Flat flat : f) {
             m.put(String.valueOf(flat.getFlatId()), flat);
+        }
+        for(Flat flat : coFlats){
+            HashMap<Integer, Integer> co = flat.getCoOwnerID();
+            if(co.containsValue(id)){
+                m.put(String.valueOf(flat.getFlatId()), flat);
+            }
         }
         return m;
     }
