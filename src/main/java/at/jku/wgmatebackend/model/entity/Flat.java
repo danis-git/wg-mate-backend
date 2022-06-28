@@ -1,10 +1,8 @@
 package at.jku.wgmatebackend.model.entity;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.Array;
+import java.util.*;
 
 @Entity
 public class Flat {
@@ -67,6 +65,15 @@ public class Flat {
         int i = 0;
         for (User u:coOwner) {
             co.put(i,u.getName());
+            i++;
+        }
+        return co;
+    }
+    public HashMap<Integer,Integer> getCoOwnerID(){
+        HashMap<Integer,Integer> co = new HashMap<>();
+        int i = 0;
+        for (User u:coOwner) {
+            co.put(i,u.getUserId());
             i++;
         }
         return co;
