@@ -33,16 +33,9 @@ public class TaskTemplateController {
     @RequestMapping("/new/{flatId}")
     @PostMapping()
     public void createTask(@PathVariable(value = "flatId") int flatId, @RequestBody Task task) {
-        System.out.println("Grüßli----------------------------------------");
-        //Task task = taskDTO.toTask();
         Flat flat = flatRepository.getById(flatId);
         task.setFlat(flat);
-        System.out.println("Herst numoi du Hupert");
-        System.out.println(task.toString());
-
         taskRepository.save(task);
-
-        // todo: new Tasks
     }
 
     @RequestMapping("/{flatId}")
